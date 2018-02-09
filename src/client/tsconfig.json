@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "amd",
+    "outFile": "dist/app.js",
+    "sourceRoot": "./src/",
+    "rootDir": "../",
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "lib": [
+      "dom",
+      "es2015"
+    ]
+  }
+}

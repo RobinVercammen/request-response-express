@@ -10,6 +10,7 @@ class App {
   constructor() {
     this.express = express();
     this.express.use(json());
+    this.express.use(express.static('src/client/dist'));
     this.container = new Container();
     this.container.registerHandlers(...handlers as any);
     this.useHandlers();
