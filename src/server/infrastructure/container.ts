@@ -42,11 +42,11 @@ export class Container {
           method = 'delete';
           break;
       }
-      router[method](handlerFactory.request.url, (expressReq, expressRes) => {
+      router[method](handlerFactory.request.url, async (expressReq, expressRes) => {
         const handler = new handlerFactory(this.db);
         const request = handlerFactory.request;
         const req = Object.assign(new request(), expressReq.params, expressReq.body);
-        const result = handler.handle(req);
+        const result = await handler.handle(req);
         expressRes.json(result);
       });
     });

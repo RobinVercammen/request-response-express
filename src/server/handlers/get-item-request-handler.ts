@@ -11,10 +11,10 @@ export class GetItemRequestHandler
 
   }
 
-  handle(request: GetItemRequest) {
-    return {
-      id: request.id,
-    };
+  async handle(request: GetItemRequest) {
+    const item = await this.db.collection('items').findOne({ id: request.id });
+    console.log(item)
+    return item;
   }
 
 }
