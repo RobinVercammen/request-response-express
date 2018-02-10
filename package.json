@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "start": "concurrently \"tsc -w \" \"nodemon ./dist/index.js\" \"tsc -w -p ./src/client/tsconfig.json\""
+    "start": "cp ./src/client/index.html ./src/client/dist/index.html && concurrently \"tsc -w \" \"nodemon ./dist/index.js\" \"tsc -w -p ./src/client/tsconfig.json\""
   },
   "author": "",
   "license": "ISC",

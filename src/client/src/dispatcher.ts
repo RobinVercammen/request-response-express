@@ -11,7 +11,7 @@ export class Dispatcher {
 
   execute<TRequest, TResponse>(request: RequestClass, params: TRequest): Promise<TResponse> {
     let url = request.url;
-    Object.keys(params).forEach(k => {
+    Object.keys(params).forEach((k) => {
       url = url.replace(`:${k}`, params[k]);
     });
     url = `${this.rootUrl}${url}`;
