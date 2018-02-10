@@ -1,5 +1,5 @@
-import { Return } from '../../common/infrastructure/return';
-import { RequestClass } from '../../common/infrastructure/decorators';
+import { ResponseFactory } from './../../common/infrastructure/response-factory';
+import { RequestFactory } from './../../common/infrastructure/request-factory';
 import { Method } from '../../common/infrastructure/method';
 
 export class Dispatcher {
@@ -9,7 +9,7 @@ export class Dispatcher {
     this.rootUrl = rootUrl;
   }
 
-  execute<TRequest, TResponse>(request: RequestClass, params: TRequest): Promise<TResponse> {
+  execute<TRequest, TResponse>(request: RequestFactory<TRequest>, params: TRequest, responseFactory: ResponseFactory<TResponse>): Promise<TResponse> {
     let url = request.url;
     Object.keys(params).forEach((k) => {
       url = url.replace(`:${k}`, params[k]);
@@ -28,6 +28,6 @@ export class Dispatcher {
         body: JSON.stringify(params),
       };
     }
-    return fetch(url, options).then(r => r.json());
+    return fetch(url, options).then(r => r.json()).then(r => new responseFactory(r));
   }
 }

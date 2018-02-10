@@ -1,4 +1,3 @@
-import { Return } from './../infrastructure/return';
 import { Request } from './../infrastructure/decorators';
 import { Method } from '../infrastructure/method';
 
@@ -6,12 +5,15 @@ import { Method } from '../infrastructure/method';
   method: Method.Post,
   url: '/items/:id',
 })
-export class AddItemRequest implements Return<AddItemResponse> {
+export class AddItemRequest {
   id: string;
   title: string;
 }
 
 export class AddItemResponse {
-  constructor(public id: string, public title: string) {
+  id: string;
+  title: string;
+  constructor(params?: Partial<AddItemResponse>) {
+    Object.assign(this, params);
   }
 }

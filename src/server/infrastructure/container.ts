@@ -1,25 +1,26 @@
+import { RequestFactory } from './../../common/infrastructure/request-factory';
 import { RequestHandler } from './requesthandler';
 import { Router } from 'express';
-import { RequestClass } from './../../common/infrastructure/decorators';
 import { Method } from './../../common/infrastructure/method';
+import { ResponseFactory } from '../../common/infrastructure/response-factory';
 
-interface RequestHandlerFn extends Function {
+interface RequestHandlerFactory<TRequest, TResponse> {
   from: string;
   to: string;
-  request: RequestClass;
-  response: { new() };
-  new(): RequestHandler<any, any>;
+  request: RequestFactory<TRequest>;
+  response: ResponseFactory<TResponse>;
+  new(): RequestHandler<TRequest, TResponse>;
 }
 
 export class Container {
-  private handlers: RequestHandlerFn[] = [];
-  registerHandlers(...handlers: RequestHandlerFn[]) {
+  private handlers: RequestHandlerFactory<any, any>[] = [];
+  registerHandlers(...handlers: RequestHandlerFactory<any, any>[]) {
     this.handlers = [...this.handlers, ...handlers];
   }
   useHandlers(router: Router) {
-    this.handlers.forEach((handlerFn) => {
+    this.handlers.forEach((handlerFactory) => {
       let method = '';
-      switch (handlerFn.request.method) {
+      switch (handlerFactory.request.method) {
         case Method.Get:
           method = 'get';
           break;
@@ -33,9 +34,9 @@ export class Container {
           method = 'delete';
           break;
       }
-      router[method](handlerFn.request.url, (expressReq, expressRes) => {
-        const handler = new handlerFn();
-        const request = handlerFn.request;
+      router[method](handlerFactory.request.url, (expressReq, expressRes) => {
+        const handler = new handlerFactory();
+        const request = handlerFactory.request;
         const req = Object.assign(new request(), expressReq.params, expressReq.body);
         const result = handler.handle(req);
         expressRes.json(result);

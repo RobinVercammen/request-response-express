@@ -4,7 +4,7 @@ import { AddItemRequest, AddItemResponse } from '../../common/requests/add-item-
 
 const dispatcher = new Dispatcher('');
 
-dispatcher.execute<GetItemRequest, GetItemResponse>(GetItemRequest as any, { id: '5' })
+dispatcher.execute(GetItemRequest, { id: '5' }, GetItemResponse)
   .then((res) => {
     document.getElementById('content').innerHTML = res.id;
   });
@@ -13,9 +13,7 @@ dispatcher.execute<GetItemRequest, GetItemResponse>(GetItemRequest as any, { id:
 document.getElementById('text').onkeyup = (e) => {
   const val = (e.target as HTMLInputElement).value;
 
-  dispatcher.execute<AddItemRequest, AddItemResponse>(
-    AddItemRequest as any,
-    { id: '5', title: val })
+  dispatcher.execute(AddItemRequest, { id: '5', title: val }, AddItemResponse)
     .then((res) => {
       document.getElementById('content').innerHTML = res.id + res.title;
     });

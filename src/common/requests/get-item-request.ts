@@ -1,16 +1,17 @@
-import { Return } from './../infrastructure/return';
-import { Request } from './../infrastructure/decorators';
+import { Request } from '../infrastructure/decorators';
 import { Method } from '../infrastructure/method';
 
 @Request({
   method: Method.Get,
   url: '/items/:id',
 })
-export class GetItemRequest implements Return<GetItemResponse> {
+export class GetItemRequest {
   id: string;
 }
 
 export class GetItemResponse {
-  constructor(public id: string) {
+  id: string;
+  constructor(params?: Partial<GetItemResponse>) {
+    Object.assign(this, params);
   }
 }
