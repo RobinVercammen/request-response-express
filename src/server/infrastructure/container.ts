@@ -1,3 +1,4 @@
+import { Db } from 'mongodb';
 import { RequestFactory } from './../../common/infrastructure/request-factory';
 import { RequestHandler } from './requesthandler';
 import { Router } from 'express';
@@ -9,14 +10,21 @@ interface RequestHandlerFactory<TRequest, TResponse> {
   to: string;
   request: RequestFactory<TRequest>;
   response: ResponseFactory<TResponse>;
-  new(): RequestHandler<TRequest, TResponse>;
+  new(db?: Db): RequestHandler<TRequest, TResponse>;
 }
 
 export class Container {
+  private db: Db;
   private handlers: RequestHandlerFactory<any, any>[] = [];
+
   registerHandlers(...handlers: RequestHandlerFactory<any, any>[]) {
     this.handlers = [...this.handlers, ...handlers];
   }
+
+  registerDb(db: Db) {
+    this.db = db;
+  }
+
   useHandlers(router: Router) {
     this.handlers.forEach((handlerFactory) => {
       let method = '';
@@ -35,7 +43,7 @@ export class Container {
           break;
       }
       router[method](handlerFactory.request.url, (expressReq, expressRes) => {
-        const handler = new handlerFactory();
+        const handler = new handlerFactory(this.db);
         const request = handlerFactory.request;
         const req = Object.assign(new request(), expressReq.params, expressReq.body);
         const result = handler.handle(req);

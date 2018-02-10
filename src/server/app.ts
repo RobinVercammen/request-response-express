@@ -1,3 +1,4 @@
+import { Db } from 'mongodb';
 import * as express from 'express';
 import { Container } from './infrastructure/container';
 import { handlers } from './handlers/handlers';
@@ -18,12 +19,16 @@ class App {
     this.useHandlers();
   }
 
+
   private useHandlers() {
     const router = express.Router();
     this.container.useHandlers(router);
     this.express.use('/', router);
   }
 
+  public registerDb(db: Db) {
+    this.container.registerDb(db);
+  }
 }
 
-export default new App().express;
+export default new App();
