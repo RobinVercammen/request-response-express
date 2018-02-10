@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "module": "amd",
-    "outFile": "../server/build/client/app.js",
+    "outFile": "../server/build/client/js/app.js",
     "sourceRoot": "./src/",
     "rootDir": "../",
     "experimentalDecorators": true,
