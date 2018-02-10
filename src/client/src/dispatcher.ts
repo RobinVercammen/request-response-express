@@ -1,6 +1,6 @@
-import { Return } from '../../infrastructure/return';
-import { RequestClass } from '../../infrastructure/decorators';
-import { Method } from '../../infrastructure/method';
+import { Return } from '../../common/infrastructure/return';
+import { RequestClass } from '../../common/infrastructure/decorators';
+import { Method } from '../../common/infrastructure/method';
 
 export class Dispatcher {
   rootUrl: string;

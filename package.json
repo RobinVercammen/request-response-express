@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "start": "cp ./src/client/index.html ./src/client/dist/index.html && concurrently \"tsc -w \" \"nodemon ./dist/index.js\" \"tsc -w -p ./src/client/tsconfig.json\""
+    "start": "ncp ./src/client/index.html ./src/server/build/client/index.html && concurrently \"tsc -w -p ./src/server/tsconfig.json\" \"nodemon ./src/server/build/server/index.js\" \"tsc -w -p ./src/client/tsconfig.json\""
   },
   "author": "",
   "license": "ISC",
@@ -13,6 +13,7 @@
     "@types/express": "^4.11.0",
     "@types/node": "^9.4.0",
     "concurrently": "^3.5.1",
+    "ncp": "^2.0.0",
     "nodemon": "^1.14.11",
     "tslint": "^5.9.1",
     "tslint-config-airbnb": "^5.5.0",

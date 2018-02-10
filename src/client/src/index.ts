@@ -1,6 +1,6 @@
 import { Dispatcher } from './dispatcher';
-import { GetItemRequest, GetItemResponse } from '../../requests/get-item-request';
-import { AddItemRequest, AddItemResponse } from '../../requests/add-item-request';
+import { GetItemRequest, GetItemResponse } from '../../common/requests/get-item-request';
+import { AddItemRequest, AddItemResponse } from '../../common/requests/add-item-request';
 
 const dispatcher = new Dispatcher('');
 

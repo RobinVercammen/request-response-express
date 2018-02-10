@@ -1,7 +1,7 @@
 import { RequestHandler } from './requesthandler';
 import { Router } from 'express';
-import { RequestClass } from './decorators';
-import { Method } from './method';
+import { RequestClass } from './../../common/infrastructure/decorators';
+import { Method } from './../../common/infrastructure/method';
 
 interface RequestHandlerFn extends Function {
   from: string;
@@ -33,12 +33,12 @@ export class Container {
           method = 'delete';
           break;
       }
-      router[method](handlerFn.request.url, (expressReq, espressRes) => {
+      router[method](handlerFn.request.url, (expressReq, expressRes) => {
         const handler = new handlerFn();
         const request = handlerFn.request;
         const req = Object.assign(new request(), expressReq.params, expressReq.body);
         const result = handler.handle(req);
-        espressRes.json(result);
+        expressRes.json(result);
       });
     });
   }

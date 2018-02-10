@@ -2,6 +2,7 @@ import * as express from 'express';
 import { Container } from './infrastructure/container';
 import { handlers } from './handlers/handlers';
 import { json } from 'body-parser';
+import * as path from 'path';
 
 class App {
   container: Container;
@@ -10,7 +11,8 @@ class App {
   constructor() {
     this.express = express();
     this.express.use(json());
-    this.express.use(express.static('src/client/dist'));
+    const clientPath = path.join(__dirname, '../client');
+    this.express.use(express.static(clientPath));
     this.container = new Container();
     this.container.registerHandlers(...handlers as any);
     this.useHandlers();
